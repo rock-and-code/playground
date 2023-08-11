@@ -2,6 +2,7 @@ import sys
 from timeit import default_timer as timer
 sys.setrecursionlimit(10000)
 
+# Reading first command-line argument passed 
 n = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 
 # fibonnaci sequence using recursive approach without DP
