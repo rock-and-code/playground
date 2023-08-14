@@ -21,7 +21,11 @@ print("#" * 5 + " Testing Pop Method " + "#" * 5)
 expResult = "C"
 print(f"Expected pop() result: {expResult} | pop() result: {stack.pop()}")
 print("Stack after popping one element from it")
-stack.printStack()
+#stack.printStack() # [B A]
+print("[", end=" ")
+for s in stack:
+    print(s, end=" ")
+print("]")
 
 print("Popping two elements from the stack...")
 stack.pop()
