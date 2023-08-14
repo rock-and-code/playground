@@ -17,6 +17,9 @@ class Stack(Generic[T]):
       self.next: Stack.Node = None
       self.value: T = value
 
+    def __str__(self) -> str:
+      return f"{self.value}"
+
 
   def __init__(self) -> None:
     """
@@ -69,6 +72,32 @@ class Stack(Generic[T]):
       print(currentNode.value, end=" ")
       currentNode = currentNode.next
     print("]")
+
+
+  def __iter__(self) -> iter:
+    return StackIter(self)
+
+
+class StackIter(object):
+  """
+  A custom Iterator class to make the custom stack class iterable
+  """
+
+  #Implement __iter__ and __next__
+  def __init__(self, stack_class: Stack) -> None:
+    super().__init__()
+    self.currentStack: Stack.Node = stack_class.top
+
+  def __iter__(self) -> iter:
+    return self
+  
+  def __next__(self) -> Stack.Node:
+    if self.currentStack != None:
+      curStack = self.currentStack
+      self.currentStack = self.currentStack.next
+      return curStack
+    else:
+      raise StopIteration
       
 
   
