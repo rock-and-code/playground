@@ -8,7 +8,7 @@ binaryTree.add("A")
 binaryTree.add("B")
 binaryTree.add("C")
 print("Adding three elements in the binary tree...")
-# Prints the elements in the queue [B A C]
+# Prints the elements in the queue [A B C]
 print("[", end=" ")
 for element in binaryTree:
     print(element, end=" ")
