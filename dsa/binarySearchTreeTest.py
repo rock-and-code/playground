@@ -6,7 +6,8 @@ bst: BinarySearchTree = BinarySearchTree()
 
 def isValidBST(bst: BinarySearchTree) -> bool:
     """
-    Returns true if the given bst is valid
+    Returns true if the given bst is valid, meaning that that parent's left child value
+    is lower and parent's right child value is greater than parents value.
     """
     stack: Stack = Stack()
     stack.push(bst.root)
@@ -65,7 +66,7 @@ print("Printing binary search tree elements...")
 bst.printBSTInOrder()
 print(f"Is the binary search tree valid? {isValidBST(bst)}")
 
-print("Deleting ement H from binary search tree..")
+print("Deleting element C from binary search tree..")
 bst.delete("C")
 print(f"Is the binary search tree still valid? {isValidBST(bst)}")
 

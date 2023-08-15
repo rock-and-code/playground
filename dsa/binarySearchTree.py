@@ -14,6 +14,9 @@ class BinarySearchTree(Generic[T]):
         in memory to support the custom binary search tree
         """
         def __init__(self, value: T) -> None:
+            """
+            Creates a new BST node
+            """
             super().__init__()
             self.value: T = value
             self.left: BinarySearchTree.Node = None
@@ -87,7 +90,7 @@ class BinarySearchTree(Generic[T]):
                 currentNode = currentNode.right
             else:
                 # we found a matching value
-                # Option No. 1 - child right is None
+                # Option No. 1 - no parent right child
                 if currentNode.right == None:
                     # Checking if we are deleting the root
                     if parentNode == None:
@@ -98,7 +101,7 @@ class BinarySearchTree(Generic[T]):
                         else:
                             parentNode.right = currentNode.left
                     return True
-                # Option No. 2 - child right left is None
+                # Option No. 2 - parent's right child has no left child
                 elif currentNode.right.left == None:
                     # Assigning the child left to the child right to maintain the balance
                     # since right child is greater than left
@@ -112,7 +115,8 @@ class BinarySearchTree(Generic[T]):
                         else:
                             parentNode.right = currentNode.right
                     return True
-                # Option No. 3 - child right left is not None (must find left most child of child right)
+                # Option No. 3 - Parents right child has a left child 
+                # (must find left most child of parent's right child)
                 else:
                     leftMostParent: BinarySearchTree.Node = currentNode.right
                     leftMost: BinarySearchTree.Node = currentNode.right.left
