@@ -32,14 +32,14 @@ class SiglyLinkedList(Generic[T]):
     """
     Adds a new element in the list
     """
-    currentNode: SiglyLinkedList.Node = self.head
-    newNode = self.Node(value)
-    if currentNode == None:
-      self.head = newNode
+    current_node: SiglyLinkedList.Node = self.head
+    new_node = self.Node(value)
+    if current_node == None:
+      self.head = new_node
       self.tail = self.head
     else:
-      self.tail.next = newNode
-      self.tail = newNode
+      self.tail.next = new_node
+      self.tail = new_node
     self.size += 1
     
   # Time: O(N) Space: (4)
@@ -50,24 +50,24 @@ class SiglyLinkedList(Generic[T]):
     if index < 0 or index >= self.size:
       raise Exception("Out of Index Exception")
     
-    currentIndex: int = 0
-    prevNode: SiglyLinkedList.Node = None
-    currentNode: SiglyLinkedList.Node = self.head
-    newNode: SiglyLinkedList.Node = SiglyLinkedList.Node(value)
+    current_index: int = 0
+    prev_node: SiglyLinkedList.Node = None
+    current_node: SiglyLinkedList.Node = self.head
+    new_node: SiglyLinkedList.Node = SiglyLinkedList.Node(value)
 
-    while currentIndex < index:
-      prevNode = currentNode
-      currentNode = currentNode.next
-      currentIndex += 1
+    while current_index < index:
+      prev_node = current_node
+      current_node = current_node.next
+      current_index += 1
     # Pointing to the index
-    if prevNode == None:
+    if prev_node == None:
       # Pointing to the head
-      newNode.next = currentNode
-      self.head = newNode
+      new_node.next = current_node
+      self.head = new_node
     else:
       # Pointing to some point between second element and last element in the list
-      newNode.next = currentNode
-      prevNode.next = newNode
+      new_node.next = current_node
+      prev_node.next = new_node
     self.size += 1
   
   # Time: O(N) Space: O(1)
@@ -75,22 +75,22 @@ class SiglyLinkedList(Generic[T]):
     """
     Removes the first occurrence of the specified element from this list, if it is present.
     """
-    currentNode: SiglyLinkedList.Node = self.head
-    if currentNode == None:
+    current_node: SiglyLinkedList.Node = self.head
+    if current_node == None:
       return False
-    elif currentNode.value == value:
+    elif current_node.value == value:
       # head moved
-      self.head = currentNode.next
+      self.head = current_node.next
       self.size -= 1
       return True
     else:
       # Traversing the list 
-      while currentNode.next != None:
-        if currentNode.next.value == value:
-          currentNode.next = currentNode.next.next
+      while current_node.next != None:
+        if current_node.next.value == value:
+          current_node.next = current_node.next.next
           self.size -= 1
           return True
-        currentNode = currentNode.next
+        current_node = current_node.next
       return False
   
   def removeFirst(self) -> T:
@@ -116,9 +116,9 @@ class SiglyLinkedList(Generic[T]):
     """
     Returns true if this list contains the specified element.
     """
-    currentNode: SiglyLinkedList.Node = self.head
-    while currentNode != None:
-      if currentNode.value == value:
+    current_node: SiglyLinkedList.Node = self.head
+    while current_node != None:
+      if current_node.value == value:
         return True
     return False
   
@@ -127,20 +127,20 @@ class SiglyLinkedList(Generic[T]):
     """
     Reverse the order of the elements in this list.
     """
-    currentNode: SiglyLinkedList.Node = self.head
-    prevNode: SiglyLinkedList.Node = currentNode
-    nextNode: SiglyLinkedList.Node = None
-    self.tail = prevNode
-    currentNode = currentNode.next
-    prevNode.next = None
+    current_node: SiglyLinkedList.Node = self.head
+    prev_node: SiglyLinkedList.Node = current_node
+    next_node: SiglyLinkedList.Node = None
+    self.tail = prev_node
+    current_node = current_node.next
+    prev_node.next = None
     
-    while currentNode != None:
-      nextNode = currentNode.next
-      currentNode.next = prevNode
-      prevNode = currentNode
-      currentNode = nextNode
+    while current_node != None:
+      next_node = current_node.next
+      current_node.next = prev_node
+      prev_node = current_node
+      current_node = next_node
 
-    self.head = prevNode
+    self.head = prev_node
 
   # Time: O(N) Space: O(1)
   def get(self, index: int) -> T:
@@ -149,12 +149,12 @@ class SiglyLinkedList(Generic[T]):
     """
     if index < 0 or index >= self.size:
       raise Exception("Out of Index Exception")
-    currentIndex: int = 0
-    currentNode: SiglyLinkedList.Node = self.head
-    while currentIndex < index:
-      currentNode = currentNode.next
-      currentIndex += 1
-    return currentNode.value
+    current_index: int = 0
+    current_node: SiglyLinkedList.Node = self.head
+    while current_index < index:
+      current_node = current_node.next
+      current_index += 1
+    return current_node.value
     
   
   # Time: O(N) Space: O(1)
@@ -162,12 +162,38 @@ class SiglyLinkedList(Generic[T]):
     """
     Prints all the elements in the list
     """
-    currentNode: SiglyLinkedList.Node = self.head
+    current_node: SiglyLinkedList.Node = self.head
     print("[", end=" ")
-    while currentNode != None:
-      print(currentNode.value, end=" ")
-      currentNode = currentNode.next
+    while current_node != None:
+      print(current_node.value, end=" ")
+      current_node = current_node.next
     print("]")
+
+  def __iter__(self) -> iter:
+    return SinglyLinkedListIter(self)
+
+class SinglyLinkedListIter(Generic[T]):
+    """
+    A custom iterator class to make the generic custom singly linked list implementation
+    iterable
+    """      
+    def __init__(self, singly_linked_list: SiglyLinkedList) -> None:
+        super().__init__()
+        # creating a list of the hashtable entries using Nested List Comprehensions in Python
+        # inspired by examples shown in https://www.geeksforgeeks.org/nested-list-comprehensions-in-python/#
+        self.current_node: SiglyLinkedList.Node = singly_linked_list.head
+     
+
+    def __iter__(self) -> iter:
+        return self
+    
+    def __next__(self) -> T:
+        if self.current_node != None:
+          node: SiglyLinkedList.Node = self.current_node
+          self.current_node = self.current_node.next
+          return node.value
+        else:
+            raise StopIteration
 
 
 

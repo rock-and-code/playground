@@ -8,6 +8,11 @@ list.add(4)
 list.add(5)
 expResult = 4
 list.printList() #  [1 3 4 5]
+print("Iterating over the singly linked list elements")
+print("[", end=" ")
+for element in list:
+    print(element, end=" ")
+print("]")
 print(f"List expected size: {expResult} : List current size: {list.size}")
 
 print("#" * 5 + " Testing Insert Method " + "#" * 5)
