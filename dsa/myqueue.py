@@ -20,9 +20,6 @@ class Queue(Generic[T]):
             super().__init__()
             self.value: T = value
             self.next: Queue.Node = None
-        
-        def __str__(self) -> str:
-            return f"{self.value}"
 
 
 
@@ -53,9 +50,11 @@ class Queue(Generic[T]):
         if self.head == None:
             return None
         else:
+            if self.head == self.tail:
+                self.tail = None
             removedElement: Queue.Node = self.head
             self.head = removedElement.next
-            return removedElement
+            return removedElement.value
         
     # Time: O(1) Space: O(1)
     def empty(self) -> bool:
@@ -69,7 +68,7 @@ class Queue(Generic[T]):
         """
         Retrieves, but does not remove, the head of this queue, or returns null if this queue is empty.
         """
-        return self.head
+        return self.head.value
     
     def __iter__(self) -> iter:
         return QueueIter(self)
@@ -90,7 +89,7 @@ class QueueIter(object):
             if self.currentElement != None:
                 element = self.currentElement
                 self.currentElement = self.currentElement.next
-                return element
+                return element.value
             else:
                 raise StopIteration
     

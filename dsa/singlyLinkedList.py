@@ -92,6 +92,15 @@ class SiglyLinkedList(Generic[T]):
           return True
         currentNode = currentNode.next
       return False
+  
+  def removeFirst(self) -> T:
+    """
+    Removes the first element from the list
+    """
+    if self.head != None:
+      if self.head == self.tail:
+        self.tail = None
+      self.head = self.head.next
     
   # Time: O(1) Space: O(1)
   def clear(self) -> None:
@@ -146,6 +155,7 @@ class SiglyLinkedList(Generic[T]):
       currentNode = currentNode.next
       currentIndex += 1
     return currentNode.value
+    
   
   # Time: O(N) Space: O(1)
   def printList(self) -> None:

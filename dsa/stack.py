@@ -17,10 +17,6 @@ class Stack(Generic[T]):
       self.next: Stack.Node = None
       self.value: T = value
 
-    def __str__(self) -> str:
-      return f"{self.value}"
-
-
   def __init__(self) -> None:
     """
     Construct an empty stack
@@ -95,7 +91,7 @@ class StackIter(object):
     if self.currentStack != None:
       curStack = self.currentStack
       self.currentStack = self.currentStack.next
-      return curStack
+      return curStack.value
     else:
       raise StopIteration
       
