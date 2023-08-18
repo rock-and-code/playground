@@ -83,3 +83,16 @@ print(f"sorter.counting_sort(arr)) : {sorter.counting_sorting(arr)}")
 end = timer()
 print(f"It took {end-start} seconds")
 # print(arr)
+
+
+print("#" * 5 + " Testing Three Way Quick Sort Method " + "#" * 5)
+
+arr: list[int] = [1, 2, 4, 3, 5, 7, 9, 8, 11, 10]
+
+pivot: int = 5
+
+print(f"List before sorting it -> {arr}")
+
+sorter.three_way_quick_sort(arr, pivot)
+
+print(f"List after sorting it using {pivot} as pivot -> {arr}")

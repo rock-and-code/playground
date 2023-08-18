@@ -2,7 +2,6 @@ from typing import TypeVar, Generic
 
 T = TypeVar("T")
 
-
 class CollectionsSorter(Generic[T]):
     """
     A custom helper class to sort collections using a variety
@@ -95,26 +94,54 @@ class CollectionsSorter(Generic[T]):
         A custom implementation of counting sort. 
         This sort algorithms works only for integers
         """
-        # identifying the max value to initializes a helper arr with max_value length + 1
+        # identifying the max value to initializes a frequency table with max_value length + 1
         max_value: int = list[0] 
 
         for i in range(len(list)):
             max_value = max(max_value, list[i])
 
-        helper: list[int] = [0] * (max_value + 1)
+        freq_table: list[int] = [0] * (max_value + 1)
 
 
         for i in range(len(list)):
-            helper[list[i]] += 1
+            freq_table[list[i]] += 1
 
         index: int = 0
 
-        for i in range(len(helper)):
-            while helper[i] > 0:
+        for i in range(len(freq_table)):
+            while freq_table[i] > 0:
                 list[index] = i
                 index += 1
-                helper[i] -= 1
-    
+                freq_table[i] -= 1
+
+    # Also known as the dutch flag sort
+    def three_way_quick_sort(self, list: list[T], pivot: int) -> None:
+        """
+        Partitions a given array using a given pivot value
+        """
+        left: int = 0
+        right: int = len(list) - 1
+        i: int = 0
+        while i <= right:
+            if list[i] > pivot:
+                self.swap(list, i, right)
+                right -= 1
+            elif list[i] < pivot:
+                self.swap(list, i, left)
+                i += 1
+                left += 1
+            else:
+                i += 1
+
+
+    def swap(self, list: list[T], left: int, right: int) -> None:
+        """
+        Swaps two element in a given list
+        """
+        temp: T = list[left]
+        list[left] = list[right]
+        list[right] = temp
+
                 
 
         
