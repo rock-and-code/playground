@@ -120,6 +120,7 @@ class SiglyLinkedList(Generic[T]):
     while current_node != None:
       if current_node.value == value:
         return True
+      current_node = current_node.next
     return False
   
   # Time: O(N) Space: O(1)
