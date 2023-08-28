@@ -51,3 +51,62 @@ list.clear()
 expResult = 0
 print(f"List expected size: {expResult} : List current size: {list.size}")
 print(f"Is list's head None after calling clear method? {list.head==None}")
+
+print("#" * 5 + " Testing Insert Method # 2 " + "#" * 5)
+list.clear()
+list.insert(0, 5)
+list.insert(0, 7)
+list.insert(0, 8)
+list.insert(0, 9)
+print("Printing list after inserting four elements...") # [9 8 7 5]
+print("List -> [", end=" ")
+for element in list:
+    print(element, end=" ")
+print("]")
+list.insert(1, 77)  # [9 77 8 7 5]
+list.insert(3, 80)  # [9 77 8 80 7 5]
+list.printList()
+
+list.remove(9)
+list.printList() # [77 8 80 7 5]
+
+list.add(5) 
+list.insert(0, 5) # [5 77 8 80 7 5 5]
+
+list.printList() # [5 77 8 80 7 5 5]
+list.removeAll(5) 
+list.printList() # [77 8 80 7]
+
+list.add(99)
+list.printList() # [77 8 80 7 99]
+
+list.reverseFrom(1, 4) 
+list.printList() # [77 99 7 80 8]
+
+list.reverseFrom(1, 3) 
+list.printList() # [77 80 7 99 8]
+
+list.reverse() # [8 99 7 80 77]
+
+list.insert(0, 11) # [11 8 99 7 80 77]
+list.add(50) # [11 8 99 7 80 77 50]
+
+list.printList() # [11 8 99 7 80 77 50]
+
+list.remove(11)
+list.remove(50)
+list.remove(7)
+
+list.printList() # [8 99 80 77 ]
+
+list.add(77)
+
+list.printList() # [8 99 80 77 77 ]
+
+list.removeAll(77)
+
+arr = [element for element in list]
+
+print(arr)
+
+

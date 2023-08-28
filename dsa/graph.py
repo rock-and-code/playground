@@ -4,12 +4,12 @@ from stack import Stack
 
 class Graph(object):
     """
-    A custom implementation of a generic graph data structure
+    A custom implementation of a graph data structure
     """
     class Node(object):
         """
         A custom node class to support non-contiguous memory allocation
-        to support the custom generic graph class
+        to support the custom graph class
         """
         def __init__(self, vertex: int, weight: int) -> None:
             super().__init__()
