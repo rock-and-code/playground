@@ -1,4 +1,6 @@
 from typing import TypeVar, Generic
+import numpy
+import numpy.typing
 
 T = TypeVar("T")
 
@@ -54,6 +56,9 @@ class CollectionsSorter(Generic[T]):
         return left
     
     # Best -> Time: O(LOG N) Space: O(N), Worst case -> O(N^2) Space: O(n)
+    # However considering python implementation of list, it won't perform as expected
+    # Python list uses a contiguous data buffer of pointers which points to python objects
+    # which in turn references its values. More info at: https://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/
     def merge_sort(self, list: list[T]) -> None:
         helper: list[T] = [] * len(list)
         self.merge_sorter(list, helper, 0, len(list) - 1)
@@ -87,6 +92,42 @@ class CollectionsSorter(Generic[T]):
 
         for i in range(remaining+1):
             list[current_index + i] = helper[helper_left + i]
+
+    def efficient_merge(self, list: numpy.ndarray, helper: numpy.ndarray, left: int, right: int, middle: int) -> None:
+        # Populating helper with list's elements
+        # helper = [element for element in list]
+        helper = numpy.fromiter(list, dtype=numpy.int64, count=len(list))
+        # defining pointers to list and helper list
+        current_index: int = left
+        helper_left: int = left
+        helper_right: int = middle + 1
+
+        while helper_left <= middle and helper_right <= right:
+            if helper[helper_left] < helper[helper_right]:
+                list[current_index] = helper[helper_left]
+                helper_left += 1
+            else:
+                list[current_index] = helper[helper_right]
+                helper_right += 1
+            current_index += 1
+        # Inserting the remaining values at the left-hand side since the right-hand side values were
+        # already in the list
+        remaining: int = middle - helper_left
+
+        for i in range(remaining+1):
+            list[current_index + i] = helper[helper_left + i]
+
+    # Merge Sort implementation using NumPy Arrays
+    def efficient_merge_sort(self, list: numpy.ndarray) -> None:
+        helper: numpy.ndarray = numpy.empty(len(list))
+        self.efficient_merge_sorter(list, helper, 0, len(list) - 1)
+
+    def efficient_merge_sorter(self, array: numpy.ndarray, helper: numpy.ndarray, left: int, right: int) -> None:
+        if left < right:
+            middle: int = (left + right) // 2
+            self.efficient_merge_sorter(array, helper, left, middle)
+            self.efficient_merge_sorter(array, helper, middle + 1, right)
+            self.efficient_merge(array, helper, left, right, middle)
 
     # Worst case -> Time: O(A + B) Space: O(A + B) 
     def counting_sorting(self, list: list[int]) -> None:
