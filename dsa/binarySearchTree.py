@@ -27,7 +27,20 @@ class BinarySearchTree(Generic[T]):
         super().__init__()
         self.root: BinarySearchTree.Node = None
 
-    
+    def get(self, value: T) -> T:
+        """
+        Returns the the given element if it exists in the bst
+        """
+        current_node: BinarySearchTree.Node = self.root
+        while current_node != None:
+            if value < current_node.value:
+                current_node = current_node.left
+            elif value > current_node.value:
+                current_node = current_node.right
+            else:
+                return current_node.value
+        return None
+
     # Time: O(LOG N) Space: O(2)
     def add(self, value: T) -> None:
         """
@@ -329,6 +342,34 @@ class BinarySearchTree(Generic[T]):
             print(node.value, end=" ")
             self.pre_order(node.left)
             self.pre_order(node.right)
+
+    def tree_grid(self) -> list[list[str]]:
+        """
+        Returns a 2 dimension list of strings representing this bst
+        """
+        height: int = self.height(self.root)
+        width: int = pow(2, height) - 1
+        grid: list[list[str]] = []
+        for _ in range(height):
+            grid.append([" " for _ in range(width)])
+        self.set_rows(grid, self.root, 0, 0, width - 1)
+        return grid
+
+    def set_rows(self, grid: list[list[str]], root: Node, row: int, left: int, right: int) -> None:
+        if root != None:
+            mid: int = (left + right) // 2
+            self.set_rows(grid, root.left, row + 1, left, mid - 1)
+            grid[row][mid] = str(root.value)
+            self.set_rows(grid, root.right, row + 1, mid + 1, right)
+
+    def print_tree_grid(self) -> None:
+        """
+        Prints a 2 dimension list of stirngs representing this bst
+        """
+        grid: list[list[str]] = self.tree_grid()
+        for row in grid:
+            print(row)
+
 
     def __iter__(self) -> iter:
         return BSTIter(self)

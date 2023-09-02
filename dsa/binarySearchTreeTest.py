@@ -73,6 +73,12 @@ bst.add("H")
 bst.add("I")
 print(f"Is the binary search balanced after inserting 5 more elements [E F G H I]? {is_balanced(bst.root)}")
 
+print("Printing a 2 dimension list of strings representing the bst")
+bst.print_tree_grid()
+
+print(f"Testing get method")
+print(f"bst.get(E) returns E {bst.get('E') == 'E'}")
+
 print("Priting the elements of the tree using iterator...")
 
 print("[", end=" ")
@@ -121,6 +127,11 @@ print("[", end=" ")
 for element in bst:
     print(element, end=" ")
 print("]")
+
+
+bst.print_tree_grid()
+
+
 
 
 
