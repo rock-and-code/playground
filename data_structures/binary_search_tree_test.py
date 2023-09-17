@@ -3,9 +3,7 @@ from stack import Stack
 
 bst: BinarySearchTree = BinarySearchTree()
 
-
 import unittest
-
 
 class TestMathMethods(unittest.TestCase):
 
