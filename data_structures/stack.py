@@ -23,6 +23,7 @@ class Stack(Generic[T]):
     """
     super().__init__()
     self.top: Stack.Node = None
+    self.size: int = 0
 
   # Time: O(1) Space: O(1)
   def empty(self) -> bool:
@@ -36,37 +37,43 @@ class Stack(Generic[T]):
     """
     Looks at the object at the top of this stack without removing it from the stack.
     """
-    return self.top.value
+    if self.top != None:
+      return self.top.value
+    return None
   
   # Time: O(1) Space: O(1)
   def push(self, value: T) -> T:
     """
     Pushes an item onto the top of this stack.
     """
-    newNode: Stack.Node = Stack.Node(value)
-    newNode.next = self.top
-    self.top = newNode
-    return newNode.value
+    new_node: Stack.Node = Stack.Node(value)
+    new_node.next = self.top
+    self.top = new_node
+    self.size += 1
+    return new_node.value
   
   # Time: O(1) Space: O(1)
   def pop(self) -> T:
     """
     Removes the object at the top of this stack and returns that object as the value of this function.
     """
-    poppedNode = self.top
-    self.top = poppedNode.next
-    return poppedNode.value
+    if self.top == None:
+      return None
+    popped_node = self.top
+    self.top = popped_node.next
+    self.size -= 1
+    return popped_node.value
 
   # Time: O(N) Space: O(1)
-  def printStack(self) -> None:
+  def print_stack(self) -> None:
     """
     Prints all the elements in this stack from the top to the bottom
     """
-    currentNode = self.top
+    current_node = self.top
     print("[", end=" ")
-    while currentNode != None:
-      print(currentNode.value, end=" ")
-      currentNode = currentNode.next
+    while current_node != None:
+      print(current_node.value, end=" ")
+      current_node = current_node.next
     print("]")
 
 
@@ -82,18 +89,18 @@ class StackIter(object):
   #Implement __iter__ and __next__
   def __init__(self, stack_class: Stack) -> None:
     super().__init__()
-    self.currentStack: Stack.Node = stack_class.top
+    self.current_stack: Stack.Node = stack_class.top
 
   def __iter__(self) -> iter:
     return self
   
   def __next__(self) -> Stack.Node:
-    if self.currentStack != None:
-      curStack = self.currentStack
-      self.currentStack = self.currentStack.next
-      return curStack.value
+    if self.current_stack != None:
+      cur_stack = self.current_stack
+      self.current_stack = self.current_stack.next
+      return cur_stack.value
     else:
-      raise StopIteration
+      raise StopIteration()
       
 
   
