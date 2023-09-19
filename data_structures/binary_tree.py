@@ -28,6 +28,7 @@ class BinaryTree(Generic[T]):
         """
         super().__init__()
         self.root: BinaryTree.Node = None
+        self.size: int = 0
 
     # Time: O(N) Space: O(1)
     def add(self, value: T) -> None:
@@ -36,6 +37,7 @@ class BinaryTree(Generic[T]):
         """
         if self.root == None:
             self.root = BinaryTree.Node(value)
+            self.size += 1
         else:
             queue: Queue = Queue()
             queue.add(self.root)
@@ -44,12 +46,14 @@ class BinaryTree(Generic[T]):
                 currentNode: BinaryTree.Node = queue.remove()
                 if currentNode.left == None:
                     currentNode.left = BinaryTree.Node(value)
+                    self.size += 1
                     return
                 else:
                     queue.add(currentNode.left)
 
                 if currentNode.right == None:
                     currentNode.right = BinaryTree.Node(value)
+                    self.size += 1
                     return
                 else:
                     queue.add(currentNode.right)
@@ -61,6 +65,7 @@ class BinaryTree(Generic[T]):
         """
         deletedValue: T = None
         if self.root == None:
+            self.size -= 1
             return None
         if self.root.left == None and self.root.right == None:
             if self.root.value == value:
@@ -91,6 +96,7 @@ class BinaryTree(Generic[T]):
             x: T = node.value # last node of the tree which will replace the node to be deleted
             self.deleteDeepest(node)
             keyNode.value = x
+            self.size -= 1
         return deletedValue
 
     # Time: O(N) Space: O(2)
