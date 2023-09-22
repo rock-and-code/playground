@@ -1,4 +1,4 @@
-from myqueue import Queue
+from data_structures import Queue
 
 queue: Queue = Queue()
 

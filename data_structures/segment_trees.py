@@ -1,5 +1,5 @@
 
-class sum_segment_tree(object):
+class SumSegmentTree(object):
     """
     A custom implementation of a segment tree to get the sum of 
     a given range
@@ -14,8 +14,8 @@ class sum_segment_tree(object):
             self.start_index: int = start_index
             self.end_index: int = end_index
             self.value: int = 0
-            self.left: sum_segment_tree.TreeNode = None
-            self.right: sum_segment_tree.TreeNode = None
+            self.left: SumSegmentTree.TreeNode = None
+            self.right: SumSegmentTree.TreeNode = None
 
     #method to get height
     def __init__(self, arr: list[int]) -> None:
@@ -35,13 +35,13 @@ class sum_segment_tree(object):
         Creates a two dimentional list of strings representing the elements of this binary tree
         """
         if start == end:
-            tree_node: sum_segment_tree.TreeNode = sum_segment_tree.TreeNode(start, end)
+            tree_node: SumSegmentTree.TreeNode = SumSegmentTree.TreeNode(start, end)
             tree_node.value = arr[start]
             return tree_node
         
         mid: int = (start + end) // 2
 
-        tree_node: sum_segment_tree.TreeNode = sum_segment_tree.TreeNode(start, end)
+        tree_node: SumSegmentTree.TreeNode = SumSegmentTree.TreeNode(start, end)
 
         tree_node.left = self.create_tree_helper(arr, start, mid)
         tree_node.right = self.create_tree_helper(arr, mid + 1, end)

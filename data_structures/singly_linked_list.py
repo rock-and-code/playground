@@ -1,5 +1,5 @@
 from typing import TypeVar, Generic
-from stack import Stack
+from .stack import Stack
 
 T = TypeVar("T")
 

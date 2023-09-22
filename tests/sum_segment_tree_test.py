@@ -1,5 +1,5 @@
 import unittest
-from segment_trees import sum_segment_tree
+from data_structures import sum_segment_tree
 
 arr: list[int] = [3, -7, 44, 78, 3, -22, 9]
 

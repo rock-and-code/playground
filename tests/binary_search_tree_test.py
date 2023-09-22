@@ -1,5 +1,5 @@
-from binary_search_tree import BinarySearchTree
-from stack import Stack
+# To run unit test -> (python or python3) -m  tests.binary_search_tree_test
+from data_structures import BinarySearchTree, Stack
 
 bst: BinarySearchTree = BinarySearchTree()
 

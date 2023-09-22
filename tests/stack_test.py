@@ -1,4 +1,4 @@
-from stack import Stack
+from data_structures import Stack
 import unittest
 
 stack: Stack = Stack()

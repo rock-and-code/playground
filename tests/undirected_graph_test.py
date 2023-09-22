@@ -1,4 +1,4 @@
-from undirected_graph import UndirectedGraph
+from data_structures import UndirectedGraph
 import unittest
 
 graph: UndirectedGraph = UndirectedGraph()

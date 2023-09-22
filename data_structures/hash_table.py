@@ -1,5 +1,5 @@
 from typing import TypeVar, Generic
-from singlyLinkedList import SiglyLinkedList
+from .singly_linked_list import SiglyLinkedList
 
 K = TypeVar("K")
 V = TypeVar("V")
@@ -51,7 +51,7 @@ class HashTable(Generic[K, V]):
                 insert = False
                 entry.value = value
         if insert:
-            self.ensureCapacity()
+            self.resize()
             # recalculates the index since table size may have changed, thus changing 
             # the hash key value
             index = self.hashKey(key, len(self.table))
@@ -59,7 +59,7 @@ class HashTable(Generic[K, V]):
             self.size += 1
     
     # Time: O(N) average Space: O(N)
-    def ensureCapacity(self) -> None:
+    def resize(self) -> None:
         """
         Increases the hash table size if the tracked hash table size is greater
         or equals than the product of hash table length and load factor (0.75)
@@ -104,20 +104,20 @@ class HashTable(Generic[K, V]):
         return HashTableIter(self)
     
     # Time: O(N) Space: O(N)
-    def keySet(self) -> set[K]:
-        keySet: set[K] = set()
+    def key_set(self) -> set[K]:
+        key_set: set[K] = set()
         for entry in self:
-            keySet.add(entry.key)
-        return keySet
+            key_set.add(entry.key)
+        return key_set
     
     # Time: O(N) Space: O(N)
-    def valueSet(self) -> set[V]:
-        valueSet: set[V] = set()
+    def value_set(self) -> set[V]:
+        value_set: set[V] = set()
         for entry in self:
-            valueSet.add(entry.value)
-        return valueSet
+            value_set.add(entry.value)
+        return value_set
     
-    def printTableKeys(self) -> None:
+    def print_table_keys(self) -> None:
         """
         Prints the keys of each mapping in the hash table
         """

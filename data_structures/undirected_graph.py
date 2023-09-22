@@ -1,5 +1,5 @@
-from stack import Stack
-from myqueue import Queue
+from .stack import Stack
+from .my_queue import Queue
 import copy
 
 from typing import TypeVar, Generic

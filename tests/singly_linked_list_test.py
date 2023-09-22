@@ -1,4 +1,4 @@
-from singlyLinkedList import SiglyLinkedList
+from data_structures import SiglyLinkedList
 
 print("#" * 5 + " Testing Add Method " + "#" * 5)
 list: SiglyLinkedList = SiglyLinkedList()

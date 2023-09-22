@@ -1,5 +1,5 @@
 import unittest
-from binary_tree import BinaryTree
+from data_structures import BinaryTree
 
 binaryTree: BinaryTree = BinaryTree()
 
