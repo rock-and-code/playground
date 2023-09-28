@@ -7,3 +7,4 @@ from .segment_trees import MaxSegmentTree
 from .singly_linked_list import SiglyLinkedList
 from .undirected_graph import UndirectedGraph
 from .binary_tree import BinaryTree
+from .trie import Trie
