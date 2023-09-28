@@ -1,4 +1,4 @@
-# To run unit test -> (python or python3) -m  tests.binary_search_tree_test
+# To run unit test -> (from playground dir) (python or python3) -m  tests.binary_search_tree_test
 from data_structures import BinarySearchTree, Stack
 
 bst: BinarySearchTree = BinarySearchTree()
