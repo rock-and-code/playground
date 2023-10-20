@@ -191,38 +191,6 @@ class BinarySearchTree(Generic[T]):
             else:
                 node = node.right
 
-    def balance_tree_after_deletion(self, value: T) -> None:
-        """
-        Balances the tree after either an insertion or a deletion from the root to the leaf nodes
-        """
-        parent: BinarySearchTree.Node = None
-        node: BinarySearchTree.Node = self.root
-
-        # Updateing the tree height (Important to calculate the balance and thus rotate the nodes)
-        self.update_tree_height()
-        while node != None:
-            balance: int = self.get_balance(node)
-
-            # 4 cases for rotation
-            if balance > 1:
-                # left-hand side of tree is unbalance
-                if self.get_balance(node.left) < 0:
-                    self.left_rotate(node.left, node)
-                
-                self.right_rotate(node, parent)
-            elif balance < -1:
-                # right-hand side of tree is unbalanced
-                if self.get_balance(node.right) > 0:
-                    self.right_rotate(node.right, node)
-                
-                self.left_rotate(node, parent)
-
-            # Traversing to the tree throught the path either the added or delete node passed
-            parent = node
-            if value < node.value:
-                node = node.left
-            else:
-                node = node.right
     
     # Time: O(LOG N) Space: O(2)
     def contains(self, value: T) -> bool:
