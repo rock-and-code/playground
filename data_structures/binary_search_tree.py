@@ -69,7 +69,7 @@ class BinarySearchTree(Generic[T]):
                         # Traverse to the right-hand side of the BST
                         currentNode = currentNode.right
             # Balances the tree after adding new node
-            self.balance_tree_after_insertion(value)
+            self.balance_tree_after_modification(value, True)
 
     def height(self, node: Node) -> int:
         """
@@ -158,7 +158,7 @@ class BinarySearchTree(Generic[T]):
             return 0
         return self.height(node.left) - self.height(node.right)
     
-    def balance_tree_after_insertion(self, value: T) -> None:
+    def balance_tree_after_modification(self, value: T, insertion: bool) -> None:
         """
         Balances the tree after either an insertion or a deletion from the root to the leaf nodes
         """
@@ -173,13 +173,13 @@ class BinarySearchTree(Generic[T]):
             # 4 cases for rotation
             if balance > 1:
                 # left-hand side of tree is unbalance
-                if value > node.left.value:
+                if (value > node.left.value if insertion == True else self.get_balance(node.left) < -1):
                     self.left_rotate(node.left, node)
                 
                 self.right_rotate(node, parent)
             elif balance < -1:
                 # right-hand side of tree is unbalanced
-                if value < node.right.value:
+                if (value < node.right.value if insertion == True else self.get_balance(node.right) > 1):
                     self.right_rotate(node.right, node)
                 
                 self.left_rotate(node, parent)
@@ -272,7 +272,7 @@ class BinarySearchTree(Generic[T]):
                             parentNode.left = currentNode.left
                         else:
                             parentNode.right = currentNode.left
-                    self.balance_tree_after_deletion(value)
+                    self.balance_tree_after_modification(value, False)
                     return True
                 # Option No. 2 - parent's right child has no left child
                 elif currentNode.right.left == None:
@@ -287,7 +287,7 @@ class BinarySearchTree(Generic[T]):
                             parentNode.left = currentNode.right
                         else:
                             parentNode.right = currentNode.right
-                    self.balance_tree_after_deletion(value)
+                    self.balance_tree_after_modification(value, False)
                     return True
                 # Option No. 3 - Parents right child has a left child 
                 # (must find left most child of parent's right child)
@@ -309,7 +309,7 @@ class BinarySearchTree(Generic[T]):
                             parentNode.left = leftMost
                         else:
                             parentNode.right = leftMost
-                    self.balance_tree_after_deletion(value)
+                    self.balance_tree_after_modification(value, False)
                     return True
 
         return False
