@@ -177,7 +177,7 @@ class UndirectedGraph(Generic[T]):
             print(f"{vertex} : {distance[vertex]}")
 
 
-        # Time: O(MN + N LOG N)
+        # Time: O(E*V+M + E LOG E) -> Naive
     def spanning_tree(self):
         """
         Returns a new unidirected graph with all the vertexes of the 
@@ -204,9 +204,43 @@ class UndirectedGraph(Generic[T]):
             if spanning_tree.is_cyclic():
                 added_edges -= 1
                 spanning_tree.remove_edge(edge.source, edge.destination, edge.weight)
-            if added_edges == len(self.adj_list) - 1:
+            if added_edges == len(self.adj_list) - 2:
                 break
 
+        return spanning_tree
+    
+    # Time: O(E LOG E + V + E)
+    def kruskal_mst(self):
+        """
+        Returns a new unidirected graph with all the vertexes of the 
+        of this graph and the minimum number of edges
+        """
+        # Getting all the egdes from the graph
+        visited: set[T] = set()
+        spanning_tree: UndirectedGraph = UndirectedGraph()
+        edges: list[UndirectedGraph.Edge] = []
+
+        for vertex in self.adj_list:
+            visited.add(vertex)
+            spanning_tree.add_vertex(vertex)
+            for edge in self.adj_list[vertex]:
+                if edge.destination not in visited:
+                    edges.append(edge)
+                    # visited.add(edge.destination)
+
+        edges.sort(key=lambda edge: edge.weight)
+        added_edges: int = 0 
+        dsj: DJS = DJS(edges)
+        j: int = 0
+        while added_edges < len(self.adj_list) - 2:
+            edge = edges[j]
+            source_root: T = dsj.findRoot(edge.source)
+            destination_root: T = dsj.findRoot(edge.destination)
+            if source_root != destination_root:
+                added_edges += 1
+                spanning_tree.add_edge(edge.source, edge.destination, edge.weight)
+                dsj.union(edge.source, edge.destination)
+            j += 1
         return spanning_tree
     
     def print_edges(self) -> None:
@@ -228,8 +262,56 @@ class UndirectedGraph(Generic[T]):
             print(vertex, end=" ")
         print("]")
 
+class DJS(Generic[T]):
+    """
+    A custom implementation of a generic disjointed set
+    to support kruskal minimum spanning tree functionaily 
+    in the generic custom undirected graph
+    """
+    def __init__(self, edges: list[UndirectedGraph.Edge]) -> None:
+        """
+        Construct a new disjointed set with a given list of edges
+        """
+        super().__init__()
+        self.rank: dict[T, int] = {}
+        self.parent: dict[T, T] = {}
+        for edge in edges:
+            self.rank[edge.source] = 0
+            self.rank[edge.destination] = 0
+            self.parent[edge.source] = edge.source
+            self.parent[edge.destination] = edge.destination
     
+    def findRoot(self, i: T) -> T:
+        """
+        Returns the root of the given element in this set
+        """
+        if self.parent[i] == i:
+            return i
+        else:
+            # Compress the path to root. This is important 
+            # to achieve efficiency since finding root generally takes n
+            # but by comprssing the path we will achieve log N next time
+            result: T = self.findRoot(self.parent[i])
+            self.parent[i] = result
+            return result
 
+    def union(self, x: T, y: T) -> None:
+        """
+        Unites twos set using geven roots element
+        """
+        rootX: T = self.findRoot(x)
+        rootY: T = self.findRoot(y)
+        # Inserts the smallest set to the larges set
+        # this is important to achieve efficiency 
+        # since it will be costly to compress the path 
+        # to root of each element of the largest set
+        if self.rank[rootX] < self.rank[rootY]:
+            self.parent[rootX] = rootY
+        elif self.rank[rootY] < self.rank[rootX]:
+            self.parent[rootY] = rootX
+        else:
+            self.parent[rootY] = rootX
+            self.rank[rootX] = self.rank[rootX] + 1
 
-
+    
     

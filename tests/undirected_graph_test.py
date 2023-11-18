@@ -139,12 +139,16 @@ class UndirectedGraphTest(unittest.TestCase):
 
         spanning_tree: UndirectedGraph = graph.spanning_tree()
 
+        spanning_tree_two: UndirectedGraph = graph.kruskal_mst()
+
         spanning_tree.print_edges()
+        spanning_tree_two.print_edges()
 
         print(f"Is spanning tree cyclic: {spanning_tree.is_cyclic()}")
+        print(f"Is spanning two tree cyclic: {spanning_tree_two.is_cyclic()}")
 
         self.assertFalse(spanning_tree.is_cyclic())
-
+        self.assertFalse(spanning_tree_two.is_cyclic())
 
 if __name__ == '__main__':
     unittest.main()
