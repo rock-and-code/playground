@@ -41,8 +41,7 @@ class UndirectedGraph(Generic[T]):
             return NotImplemented
         
         def __ne__(self, other):
-            x = self.__eq__(other)
-            if x == NotImplemented:
+            if (x := self.__eq__(other)) == NotImplemented:
                 return NotImplemented
             return not x
         
