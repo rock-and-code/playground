@@ -246,7 +246,7 @@ class UndirectedGraph(Generic[T]):
     def print_edges(self) -> None:
         total_cost: int = 0
         visited: set[T] = set()
-        print(f"Edges: ")
+        print("Edges: ")
         for vertex in self.adj_list:
             visited.add(vertex)
             for edge in self.adj_list[vertex]:
