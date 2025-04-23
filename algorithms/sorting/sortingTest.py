@@ -1,14 +1,14 @@
 from sorting import CollectionsSorter
 from timeit import default_timer as timer
 import numpy
-import random
+import secrets
 
 sorter: CollectionsSorter = CollectionsSorter()
 
 def rand_int_list_generator(max_value: int, size: int, numpy_array: bool) -> list[int]:
     helper: list[int] = []
     for i in range(size + 1):
-        rand_int: int = random.randint(0, max_value)
+        rand_int: int = secrets.SystemRandom().randint(0, max_value)
         helper.append(rand_int)
     if numpy_array:
         return numpy.array(helper)
